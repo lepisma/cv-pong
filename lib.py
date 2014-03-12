@@ -28,19 +28,19 @@ def filterBlob(img):
 
 	min = np.array([ranges[0][0][0], ranges[0][1][0], ranges[0][2][0]], np.uint8)
 	max = np.array([ranges[0][0][1], ranges[0][1][1], ranges[0][2][1]], np.uint8)
-	red = cv2.inRange(imgcropped, min, max)
+	red = cv2.inRange(img, min, max)
 	red = clearNoise(red)
 	blobArray.append(red)
 
 	min = np.array([ranges[1][0][0], ranges[1][1][0], ranges[1][2][0]], np.uint8)
 	max = np.array([ranges[1][0][1], ranges[1][1][1], ranges[1][2][1]], np.uint8)
-	green = cv2.inRange(imgcropped, min, max)
+	green = cv2.inRange(img, min, max)
 	green = clearNoise(green)
 	blobArray.append(green)
 
 	min = np.array([ranges[2][0][0], ranges[2][1][0], ranges[2][2][0]], np.uint8)
 	max = np.array([ranges[2][0][1], ranges[2][1][1], ranges[2][2][1]], np.uint8)
-	blue = cv2.inRange(imgcropped, min, max)
+	blue = cv2.inRange(img, min, max)
 	blue = clearNoise(blue)
 	blobArray.append(blue)
 
@@ -56,7 +56,7 @@ def getPositions(img):
 
 	if len(contours)<1:
 		positions.append((-1, -1))
-		continue
+		return positions
 
 	cnt=contours[0]
 	topmost = tuple(cnt[cnt[:,:,1].argmin()][0])
