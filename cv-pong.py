@@ -1,18 +1,4 @@
 #!/usr/bin/env python
-#
-#       This program is free software; you can redistribute it and/or modify
-#       it under the terms of the GNU General Public License as published by
-#       the Free Software Foundation; either version 2 of the License, or
-#       (at your option) any later version.
-#       
-#       This program is distributed in the hope that it will be useful,
-#       but WITHOUT ANY WARRANTY; without even the implied warranty of
-#       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#       GNU General Public License for more details.
-#
-#		It's my first actual game-making attempt. I know code could be much better 
-#		with classes or defs but I tried to make it short and understandable with very 
-#		little knowledge of python and pygame(I'm one of them). Enjoy.
 
 import pygame
 from pygame.locals import *
@@ -21,10 +7,12 @@ import random
 import cv2
 import numpy as np
 
+vc = cv2.VideoCapture(0)
+
 pygame.init()
 
 screen=pygame.display.set_mode((640,480),0,32)
-pygame.display.set_caption("Pong Pong!")
+pygame.display.set_caption("CV pong !")
 
 #Creating 2 bars, a ball and background.
 back = pygame.Surface((640,480))
@@ -39,6 +27,10 @@ circ_sur = pygame.Surface((15,15))
 circ = pygame.draw.circle(circ_sur,(0,255,0),(15/2,15/2),15/2)
 circle = circ_sur.convert()
 circle.set_colorkey((0,0,0))
+hand_sur = pygame.Surface((30,30))
+hand_circle = pygame.draw.circle(hand_sur, (255,0,0), (15, 15), 15)
+hand_circle = hand_sur.convert()
+hand_circle.set_colorkey((0,0,0))
 
 # some definitions
 bar1_x, bar2_x = 10. , 620.
@@ -47,6 +39,7 @@ circle_x, circle_y = 307.5, 232.5
 bar1_move, bar2_move = 0. , 0.
 speed_x, speed_y, speed_circ = 250., 250., 250.
 bar1_score, bar2_score = 0,0
+hand_x, hand_y = 200, 200
 #clock and font objects
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("calibri",40)
@@ -78,6 +71,7 @@ while True:
     screen.blit(circle,(circle_x,circle_y))
     screen.blit(score1,(250.,210.))
     screen.blit(score2,(380.,210.))
+    screen.blit(hand_circle, (200., 200.))
 
     bar1_y += bar1_move
     
