@@ -28,10 +28,6 @@ circ_sur = pygame.Surface((15,15))
 circ = pygame.draw.circle(circ_sur,(0,255,0),(15/2,15/2),15/2)
 circle = circ_sur.convert()
 circle.set_colorkey((0,0,0))
-hand_sur = pygame.Surface((30,30))
-hand_circle = pygame.draw.circle(hand_sur, (255,0,0), (15, 15), 15)
-hand_circle = hand_sur.convert()
-hand_circle.set_colorkey((0,0,0))
 
 # some definitions
 bar1_x, bar2_x = 10. , 620.
@@ -40,7 +36,6 @@ circle_x, circle_y = 307.5, 232.5
 bar1_move, bar2_move = 0. , 0.
 speed_x, speed_y, speed_circ = 150., 150., 250.
 bar1_score, bar2_score = 0,0
-hand_x, hand_y = 200, 200
 #clock and font objects
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("calibri",40)
@@ -76,7 +71,6 @@ while ret:
     screen.blit(circle,(circle_x,circle_y))
     screen.blit(score1,(250.,210.))
     screen.blit(score2,(380.,210.))
-    screen.blit(hand_circle, (200., 200.))
 
     bar1_y += bar1_move
     
