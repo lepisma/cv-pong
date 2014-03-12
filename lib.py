@@ -10,10 +10,10 @@ ranges = [[(160, 179),(106, 255),(0, 255)], # Red
 
 def clearNoise(img):
 	kernel = np.ones((10, 10), np.uint8)
-	clrimg = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
+	# clrimg = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
 	clrimg = cv2.erode(img, kernel, iterations=1)
-	kernel = np.ones((15, 15), np.uint8)
-	clrimg = cv2.dilate(img, kernel, iterations=2)
+	# kernel = np.ones((15, 15), np.uint8)
+	# clrimg = cv2.dilate(img, kernel, iterations=2)
 	# Clears noise from image
 	return clrimg
 

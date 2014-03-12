@@ -4,6 +4,7 @@ import pygame
 from pygame.locals import *
 from sys import exit
 import random
+import lib
 import cv2
 import numpy as np
 
@@ -37,15 +38,19 @@ bar1_x, bar2_x = 10. , 620.
 bar1_y, bar2_y = 215. , 215.
 circle_x, circle_y = 307.5, 232.5
 bar1_move, bar2_move = 0. , 0.
-speed_x, speed_y, speed_circ = 250., 250., 250.
+speed_x, speed_y, speed_circ = 150., 150., 250.
 bar1_score, bar2_score = 0,0
 hand_x, hand_y = 200, 200
 #clock and font objects
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("calibri",40)
+ret, frame = vc.read()
 
-while True:
-    
+while ret:
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    positions_of_colors = map(lib.getPositions, lib.filterBlob(frame))
+    print positions_of_colors[2]
+
     for event in pygame.event.get():
         if event.type == QUIT:
             exit()
@@ -82,6 +87,12 @@ while True:
     circle_x += speed_x * time_sec
     circle_y += speed_y * time_sec
     ai_speed = speed_circ * time_sec
+
+    if positions_of_colors[2][0][1] >= 0:
+        if positions_of_colors[2][0][1] > 240:
+            bar1_move = ai_speed
+        elif positions_of_colors[2][0][1] < 240:
+            bar1_move = -ai_speed
 #AI of the computer.
     # if circle_x >= 305.:
     if not bar2_y == circle_y + 7.5:
@@ -96,7 +107,7 @@ while True:
     elif bar1_y <= 10. : bar1_y = 10.
     if bar2_y >= 420.: bar2_y = 420.
     elif bar2_y <= 10.: bar2_y = 10.
-#since i don't know anything about collision, ball hitting bars goes like this.
+
     if circle_x <= bar1_x + 10.:
         if circle_y >= bar1_y - 7.5 and circle_y <= bar1_y + 42.5:
             circle_x = 20.
@@ -121,3 +132,4 @@ while True:
         circle_y = 457.5
 
     pygame.display.update()
+    ret, frame = vc.read()

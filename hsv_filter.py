@@ -12,11 +12,17 @@ cv2.namedWindow('image')
 
 # create trackbars for color change
 cv2.createTrackbar('Hmin','image',0,180,nothing)
+cv2.setTrackbarPos('Hmin','image', 100)
 cv2.createTrackbar('Hmax','image',0,180,nothing)
+cv2.setTrackbarPos('Hmax','image', 120)
 cv2.createTrackbar('Smin','image',0,255,nothing)
+cv2.setTrackbarPos('Smin','image', 136)
 cv2.createTrackbar('Smax','image',0,255,nothing)
+cv2.setTrackbarPos('Smax','image', 255)
 cv2.createTrackbar('Vmin','image',0,255,nothing)
+cv2.setTrackbarPos('Vmin','image', 0)
 cv2.createTrackbar('Vmax','image',0,255,nothing)
+cv2.setTrackbarPos('Vmax','image', 255)
 
 vc = cv2.VideoCapture(0)
 
@@ -38,9 +44,11 @@ while ret:
 
 	filtered = cv2.inRange(hsv, min, max)
 
-	cleared = lib.clearNoise(filtered)
+	# cleared = lib.clearNoise(filtered)
+	kernel = np.ones((20, 20), np.uint8)
+	filtered = cv2.erode(filtered, kernel, iterations=1)
 
-	cv2.imshow('image', cleared)
+	cv2.imshow('image', filtered)
 	rval, frame = vc.read()
 
 	key = cv2.waitKey(20)
