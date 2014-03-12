@@ -44,7 +44,7 @@ ret, frame = vc.read()
 while ret:
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     positions_of_colors = map(lib.getPositions, lib.filterBlob(frame))
-    print positions_of_colors[2]
+    # print positions_of_colors[2]
 
     for event in pygame.event.get():
         if event.type == QUIT:
